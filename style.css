@@ -1,0 +1,43 @@
+.center
+{
+    text-align: center;   
+}
+.login-panel
+{
+    background-color:#6FA4BD;
+    padding: 3rem;
+    margin:auto;
+    border-radius: 5px;
+}
+
+input
+{
+    width:
+}
+
+body
+{
+    background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url('https://www.pomysly-na.pl/wp-content/uploads/inspiracje/jak-kreatywnie-820x546.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+label
+{
+    color:white;   
+    padding:10px; 
+}
+
+.title
+{
+    font-size:6rem;
+    color:white;
+    margin-bottom:4rem;
+}
+
+.middle
+{
+    top:50%;
+    transform: translate(0, 50%);
+}
