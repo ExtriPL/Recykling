@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <html lang='pl'>
     <head>
         <meta charset = 'utf-8'>
@@ -16,12 +20,19 @@
         <div class="middle">
             <div class= "container"><h1 class="display center title">Recykling </h1></div>
             <div class = "container-fluid col-lg-4 col-xs-12 login-panel center">
-                <form action="index.php" method = "post">
+                <form action="login.php" method = "post">
                     <input  placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class = "form-control" type="text" name="nickname"><br>
                     <input  placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1" class = "form-control" type="password" name="password"><br>
                     <button class="btn btn-light" action = "submit">ZALOGUJ</button>
                 </form>
             </div>
         </div>
+        <?php
+            if(isset($_SESSION["back-message"]))
+            {
+                echo "<p style='color:red;'>".$_SESSION["back-message"]."</p>";
+                unset($_SESSION["back-message"]);
+            }
+        ?>
     </body>
 </html>
