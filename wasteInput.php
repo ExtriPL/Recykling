@@ -11,7 +11,7 @@
 <option value="butelka">Butelka</option>
 <option value="puszka">Puszka</option>
 </select>
-&nbsps
+&nbsp
 <label for="amountOfWaste">Ilość odpadku: </label>
 
 <input type="number" id="amountOfWaste" name="amountOfWaste" min="1">
