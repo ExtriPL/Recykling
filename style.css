@@ -8,6 +8,7 @@
     padding: 3rem;
     margin:auto;
     border-radius: 5px;
+    margin-top:5%;
 }
 
 body
@@ -26,13 +27,12 @@ label
 
 .title
 {
-    font-size:6rem;
     color:white;
     margin-bottom:4rem;
+    margin-top:5%;
 }
 
-.middle
+.text-white
 {
-    top:50%;
-    transform: translate(0, 50%);
+    color:white;
 }

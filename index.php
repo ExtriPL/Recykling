@@ -17,15 +17,14 @@
   
     </head>
     <body>
-        <div class="middle">
-            <div class= "container"><h1 class="display center title">Recykling </h1></div>
-            <div class = "container-fluid col-lg-4 col-xs-12 login-panel center">
-                <form action="login.php" method = "post">
-                    <input  placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class = "form-control" type="text" name="nickname"><br>
-                    <input  placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1" class = "form-control" type="password" name="password"><br>
-                    <button class="btn btn-light" action = "submit">ZALOGUJ</button>
-                </form>
-            </div>
+    <h1 class="display-1 center text-white">Recykling </h1>
+        <div class = "container-fluid col-lg-4 col-xs-12 login-panel center">
+        
+            <form action="login.php" method = "post">
+                <input  placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class = "form-control" type="text" name="nickname"><br>
+                <input  placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1" class = "form-control" type="password" name="password"><br>
+                <button class="btn btn-light" action = "submit">ZALOGUJ</button>
+            </form>
         </div>
         <?php
             if(isset($_SESSION["back-message"]))
