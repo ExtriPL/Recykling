@@ -25,7 +25,7 @@ if(file_exists($fileName))
     {
         echo "<option value=".$item.">".$item."</option>";
     }
-echo "</select>";
+    echo "</select>";
 }
 else
 {
@@ -34,6 +34,7 @@ else
 }
 
 openFile($fileWithTypesName,$wasteTypeArray);
+
 echo "&nbsp
 <label for='amountOfWaste'>Ilość odpadku: </label>
 <input type='number' id='amountOfWaste' name='amountOfWaste' min='1'>";
