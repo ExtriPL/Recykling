@@ -15,8 +15,7 @@ if(file_exists($fileName))
     $fileOptions = fopen($fileName,"r");
     while(!feof($fileOptions))
     {   
-        $line = fgets($fileOptions);
-        array_push($arrayName,$line);
+        array_push($arrayName,fgets($fileOptions));
     }
     fclose($fileOptions);
     echo "<label for='typeofWaste'>Wybierz typ odpadku: </label>
