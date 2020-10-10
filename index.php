@@ -1,5 +1,14 @@
 <?php
     session_start();
+
+    include("user.php");
+    $user = User::loadUser("extripl");
+    echo "Butelka: ".$user->getWasteAmount("butelka")."<br>";
+
+    if(isset($_SESSION["loggedIn"]))
+    {
+        echo "Zalogowany jako: ".$_SESSION["userName"];
+    }
 ?>
 
 <html lang='pl'>
