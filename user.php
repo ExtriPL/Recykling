@@ -14,7 +14,7 @@ class User
     //Lista odpadków, które zebrał użytkownik
     private array $wastes;
 
-    public function __construct(string $userName, string $passKey, string $role, $classCode)
+    public function __construct(string $userName, string $passKey, string $role, string $classCode)
     {
         $this->userName = $userName;
         $this->passKey = $passKey;

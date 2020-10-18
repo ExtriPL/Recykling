@@ -12,7 +12,7 @@ class SchoolClass
 
     private array $students;
 
-    public function __construct($classCode, $name, $location)
+    public function __construct(string $classCode, string $name, string $location)
     {
         $this->classCode = $classCode;
         $this->name = $name;
