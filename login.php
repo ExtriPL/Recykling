@@ -20,7 +20,7 @@
         $_SESSION["loggedIn"] = true;
         $_SESSION["userName"] = $nick;
         
-        header("Location: index.php");
+        header("Location: userPage.php");
         exit();
     }
 

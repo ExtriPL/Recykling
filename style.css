@@ -13,7 +13,7 @@
 
 body
 {
-    background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url('https://www.pomysly-na.pl/wp-content/uploads/inspiracje/jak-kreatywnie-820x546.jpg');
+    
     background-repeat: no-repeat;
     background-size: cover;
 
@@ -36,3 +36,13 @@ label
 {
     color:white;
 }
+.error-msg
+{
+    color:red;
+    font-size: 1.5rem;
+}
+
+/* .btn-big
+{
+    font-size:2rem;
+} */

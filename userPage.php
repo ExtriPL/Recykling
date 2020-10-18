@@ -48,42 +48,40 @@
                 </form>
             </div>
         </nav>
-    <?php
-        $fileWithTypesName = "types.txt";
-        $wasteTypeArray = [];
 
-        function openFile($fileName,$arrayName)
+
+    <div class="jumbotron">
+        <h4> 
+        <?php
+        if(isset($_SESSION["loggedIn"]))
         {
-        if(file_exists($fileName))
-        {
-            $fileOptions = fopen($fileName,"r");
-            while(!feof($fileOptions))
-            {   
-                array_push($arrayName,fgets($fileOptions));
-            }
-            fclose($fileOptions);
-            echo "<label for='typeofWaste'>Wybierz typ odpadku: </label>
-            <select name='typeOfWaste' id='typeofWaste'>";
-            foreach($arrayName as $item)
-            {
-                echo "<option value=".$item.">".$item."</option>";
-            }
-            echo "</select>";
+            echo "Zalogowany jako: ".$_SESSION["userName"];
         }
-        else
-        {
-            echo "Plik nie istnieje lub jest niepoprawny";
-        }
-        }
-
-        openFile($fileWithTypesName,$wasteTypeArray);
-
-        echo "&nbsp
-        <label for='amountOfWaste'>Ilość odpadku: </label>
-        <input type='number' id='amountOfWaste' name='amountOfWaste' min='1'>";
-
-    ?>
-
-  
+        ?>
+        </h4>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col center">
+                <div class="jumbotron">
+                    <h1 class="">Suma zebranych przez Ciebie butelek</h1>
+                    <p class="display-1">100 m2</p>
+                </div>
+            </div>
+            <div class="col center">
+            <div class="jumbotron">
+                    <h1 class="">Suma zebranych przez Twoją klasę butelek</h1>
+                    <p class="display-1">1000 m2</p>
+                </div>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col center">
+                    <div class="jumbotron">
+                        <a class="btn btn-primary btn-lg" href="wasteInput.php">Dodaj zebrane odpadki</a>
+                    </div>
+                </div>
+            </div>
+    </div>
     </body>
 </html>
