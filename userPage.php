@@ -1,5 +1,11 @@
 <?php
+    include("user.php");
     session_start(); 
+    if(!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"])
+    {
+        header("location:index.php");
+        exit();
+    }
     ?>
 <html lang='pl'>
    
@@ -65,7 +71,10 @@
             <div class="col center">
                 <div class="jumbotron">
                     <h1 class="">Suma zebranych przez Ciebie butelek</h1>
-                    <p class="display-1">100 m2</p>
+                    <p class="display-1"><?php
+                        $currentUser = User::loadUser($_SESSION["userName"]);
+                        $currentUser->getWasteAmount("butelka");
+                    ?></p>
                 </div>
             </div>
             <div class="col center">
