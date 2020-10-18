@@ -3,11 +3,16 @@ include("user.php");
 
 class SchoolClass
 {
+    //Folder, w którym przechowywane są pliki klas
     public static string $classesdDir = "Classes";
 
+    //Kod klasy
     private string $classCode;
+    //Pełna nazwa szkoły
     private string $name;
+    //Adres szkoły
     private string $location;
+    //Nazwa użytkownika, który jest nauczycielem tej klasy
     private string $teacher;
 
     private array $students;
@@ -24,6 +29,7 @@ class SchoolClass
         $this->teacher = $teacherName;
     }
 
+    //Zapisuje plik klasy do pliku
     public function saveClass() : void
     {
         if(!file_exists(SchoolClass::$classesdDir))
@@ -34,17 +40,20 @@ class SchoolClass
         file_put_contents(SchoolClass::$classesdDir."/".$this->classCode.".schclass", $classContent);
     }
 
+    //Dodaje ucznia o podanej nazwie do danej klasy
     public function addStudent(string $studentName) : void
     {
         $this->students[] = $studentName;
     }
 
+    //Dodaje ucznia o podanej nazwie do danej klasy i zapisuje zmiany do pliku
     public function addStudentAndSave(string $studentName) : void
     {
         $this->addStudent($studentName);
         $this->saveClass();
     }
 
+    //Usuwa ucznia z danej klasy
     public function removeStudent(string $studentName) : void
     {
         $index = array_search($studentName, $this->students);
@@ -53,17 +62,20 @@ class SchoolClass
             array_splice($this->students, $index, 1);
     }
 
+    //Usuwa ucznia z danej klasy i zapisuje zmiany do pliku
     public function removeStudentAndSave(string $studentName) : void
     {
         $this->removeStudent($studentName);
         $this->saveClass();
     }
 
+    //Sprawdza, czy użytkownik o podanej nazwie jest nauczycielem, który zarejestrował klasę
     public function isOwner(string $userName) : bool
     {
         return $this->teacher == $userName;
     }
 
+    //Zwraca instancje uczniów, którzy należą do klasy
     public function getStudents() : array
     {
         $students = array();
@@ -74,6 +86,40 @@ class SchoolClass
         return $students;
     }
 
+    //Zwraca pole powieszchni wszystkich odpadków zebranych przez klasę
+    public function getWastesArea() : float
+    {
+        $area = 0;
+
+        foreach($this->getStudents() as $student)
+            $area += $student->getWastesArea();
+
+        return $area;
+    }
+
+    //Zwraca pole powieszchni wszystkich odpadków zebranych przez klasę do podanej daty
+    public function getWastesAreaToDate(string $date) : float
+    {
+        $area = 0;
+
+        foreach($this->getStudents() as $student)
+            $area += $student->getWastesAreaToDate($date);
+
+        return $area;
+    }
+
+    //Zwraca pole powieszchni wszystkich odpadków zebranych przez klasę w podanym dniu
+    public function getWastesAreaInDate(string $date) : float
+    {
+        $area = 0;
+
+        foreach($this->getStudents() as $student)
+            $area += $student->getWastesAreaInDate($date);
+
+        return $area;
+    }
+
+    //Sprawdza, czy klasa o podanym kodzie istnieje
     public static function exists(string $classCode) : bool
     {
         if(!file_exists(SchoolClass::$classesdDir))
@@ -90,6 +136,7 @@ class SchoolClass
         return false;
     }
 
+    //Wczytuje instancje klasy o podanym kodzie z pliku
     public static function loadClass(string $classCode) : SchoolClass
     {
         if(SchoolClass::exists($classCode))

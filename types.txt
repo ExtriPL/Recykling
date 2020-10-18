@@ -1,3 +1,4 @@
-butelka
-puszka
-cos
+{
+	"butelka":10,
+	"puszka":15
+}

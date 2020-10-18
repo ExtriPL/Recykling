@@ -1,4 +1,6 @@
 <?php
+include("waste.php");
+
 class User
 {
     //Folder, w którym przechowywani są użytkownicy
@@ -13,6 +15,8 @@ class User
     private string $classCode;
     //Lista odpadków, które zebrał użytkownik
     private array $wastes;
+    //Tablica asocjacyjna przechowująca ilość odpadków zebranych do danego dnia
+    private array $areaTrack;
 
     public function __construct(string $userName, string $passKey, string $role, string $classCode)
     {
@@ -32,6 +36,7 @@ class User
     //Funkcja zapisuje instancje użytkownika do pliku
     public function saveUser() : void
     {
+        $this->updateAreaTrack();
         $userString = serialize($this);
 
         if(!file_exists(User::$accountsDir))
@@ -89,6 +94,49 @@ class User
             return 0;
     }
 
+    //Zwraca sume pól powieszchni wszystkich odpadków, jakie posiada użytkownik
+    public function getWastesArea() : float
+    {
+        $area = 0;
+
+        $wastes = Waste::loadWastes();
+
+        foreach($this->getWasteNames() as $wasteName)
+        {
+            if(array_key_exists($wasteName, $wastes))
+                $area += $wastes[$wasteName];
+        }
+
+        return $area;
+    }
+
+    //Zwraca pole powieszchni wszystkich odpadków, które zostały uzbierane do podanego dnia(Data w formacie Y-m-d)
+    public function getWastesAreaToDate(string $date) : float
+    {
+        if(array_key_exists($date, $this->areaTrack))
+            return $this->areaTrack[$date];
+        else
+            return 0;
+    }
+
+    //Zwraca pole powieszchni odpadków, które zostały uzbierane danego dnia(Data w formacie Y-m-d)
+    public function getWastesAreaInDate(string $date) : float
+    {
+        $previousDate = date("Y-m-d", strtotime("-1 day", strtotime($date)));
+
+        $dateArea = $this->getWastesAreaToDate($date);
+        $previousDateArea = $this->getWastesAreaToDate($previousDate);
+
+        return $dateArea - $previousDateArea;
+    }
+
+    //Zapisuje pole powieszchni zebranych dotąd odpadków do listy śledzącej postępy zbierania
+    private function updateAreaTrack() : void
+    {
+        $today = date("Y-m-d");
+        $this->areaTrack[$today] = $this->getWastesArea();
+    }
+
     //Zwraca informację, czy użytkownik jest uczniem. Jeżeli false oznacza, że użytkownik jest nauczycielem
     public function isStudent() : bool
     {
@@ -119,6 +167,7 @@ class User
             return false;
     }
 
+    //Zwraca kod klasy, do której należy użytkownik
     public static function getUserClassCode($userName)
     {
         if(!file_exists(User::$accountsDir))

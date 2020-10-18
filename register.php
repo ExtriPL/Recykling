@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    include("schoolClass.php");
+    include("Systems/schoolClass.php");
 
     $userName;
     if(isset($_POST["nickname"]))
@@ -40,13 +40,22 @@
     {
         if($role == "teacher")
         {
-            //Tworzenie klasy
-            $schoolName = htmlspecialchars($_POST["schoolName"]);
-            $schoolLocation = htmlspecialchars($_POST["schoolLocation"]);
+            if(!SchoolClass::exists($classCode))
+            {
+                //Tworzenie klasy
+                $schoolName = htmlspecialchars($_POST["schoolName"]);
+                $schoolLocation = htmlspecialchars($_POST["schoolLocation"]);
 
-            $class = new SchoolClass($classCode, $schoolName, $schoolLocation);
-            $class->setTeacher($userName);
-            $class->saveClass();
+                $class = new SchoolClass($classCode, $schoolName, $schoolLocation);
+                $class->setTeacher($userName);
+                $class->saveClass();
+            }
+            else
+            {
+                $_SESSION["back-message"] = "Klasa o podanym kodzie już istnieje";
+                header("Location: registerUser.php");
+                exit();
+            }
         }
         else if(SchoolClass::exists($classCode))
         {

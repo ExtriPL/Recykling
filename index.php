@@ -1,13 +1,12 @@
 <?php
-    // include("user.php");
-    // include("schoolClass.php");
+    // include("Systems/schoolClass.php");
     // $class1 = new SchoolClass("1", "Klasa 1 zst", "Radomkowo");
     // $mrw = new User("mrw", password_hash("12345", PASSWORD_DEFAULT), "teacher", "1");
     // $class1->addStudent("mrw");
     // $class1->saveClass();
     // $mrw->saveUser();
-    
     session_start();
+
     if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"])
     {
         header("location:homePage.php");
