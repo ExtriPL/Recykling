@@ -39,13 +39,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="homePage.php">Główna</a>
+                    <a class="nav-link active" href="homePage.php">Główna</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="userPage.php">Strona użytkownika </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="wasteInput.php">Dodaj odpadki</a>
+                    <a class="nav-link" href="wasteInput.php">Dodaj odpadki</a>
                 </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="logout.php" method="POST">

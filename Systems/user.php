@@ -12,7 +12,7 @@ class User
     //Rola użytkownika w klasie ("student" - uczeń, "teacher" - nauczyciel)
     private string $role;
     //Kod klasy, do której przypisany jest użytkownik
-    private string $classCode;
+    public string $classCode;
     //Lista odpadków, które zebrał użytkownik
     private array $wastes;
     //Tablica asocjacyjna przechowująca ilość odpadków zebranych do danego dnia

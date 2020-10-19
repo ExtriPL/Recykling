@@ -22,6 +22,7 @@ class SchoolClass
         $this->classCode = $classCode;
         $this->name = $name;
         $this->location = $location;
+        $this->students = array();
     }
 
     public function setTeacher($teacherName) : void
@@ -79,7 +80,6 @@ class SchoolClass
     public function getStudents() : array
     {
         $students = array();
-
         foreach($this->students as $student)
             $students[] = User::loadUser($student);
 

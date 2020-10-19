@@ -1,9 +1,10 @@
 <?php
-    include("Systems/user.php");
+    include("Systems/schoolClass.php");
     session_start(); 
     if(!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"])
     {
         header("location:index.php");
+        
         exit();
     }
     ?>
@@ -43,10 +44,10 @@
                     <a class="nav-link" href="homePage.php">Główna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="userPage.php">Strona użytkownika </a>
+                    <a class="nav-link active" href="userPage.php">Strona użytkownika </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="wasteInput.php">Dodaj odpadki</a>
+                    <a class="nav-link" href="wasteInput.php">Dodaj odpadki</a>
                 </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="logout.php" method="POST">
@@ -73,14 +74,18 @@
                     <h1 class="">Suma zebranych przez Ciebie butelek</h1>
                     <p class="display-1"><?php
                         $currentUser = User::loadUser($_SESSION["userName"]);
-                        $currentUser->getWasteAmount("butelka");
+                        echo $currentUser->getWastesArea() . " m2";
                     ?></p>
                 </div>
             </div>
             <div class="col center">
             <div class="jumbotron">
                     <h1 class="">Suma zebranych przez Twoją klasę butelek</h1>
-                    <p class="display-1">1000 m2</p>
+                    <p class="display-1"><?php
+                        $currentUser = User::loadUser($_SESSION["userName"]);
+                        $currentClass = SchoolClass::loadClass($currentUser->classCode);
+                        echo $currentClass->getWastesArea() . " m2";
+                    ?></p>
                 </div>
             </div>
         </div>
