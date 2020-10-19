@@ -36,13 +36,24 @@ label
 {
     color:white;
 }
+
+.text-black
+{
+    color:black;
+}
 .error-msg
 {
     color:red;
     font-size: 1.5rem;
 }
 
-/* .btn-big
+span a 
 {
-    font-size:2rem;
-} */
+    color:black;
+}
+
+
+span a:hover
+{
+    color:black;
+}

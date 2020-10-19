@@ -58,6 +58,7 @@
             ?>
             </b>
         </span>
+        <span style="float:right"><a href="registerUser.php">Zarejestruj się</a></span>
         </div>
     </body>
 </html>
