@@ -104,7 +104,7 @@ class User
         foreach($this->getWasteNames() as $wasteName)
         {
             if(array_key_exists($wasteName, $wastes))
-                $area += $wastes[$wasteName];
+                $area += $wastes[$wasteName] * $this->getWasteAmount($wasteName);
         }
 
         return $area;
