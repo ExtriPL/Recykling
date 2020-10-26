@@ -141,6 +141,17 @@ class User
         return $dateArea - $previousDateArea;
     }
 
+    public function getWastesAreaBetweenDates(string $first, string $second) : float
+    {
+        if(strtotime($first) > strtotime($second))
+            [$first, $second] = [$second, $first];
+
+        $firstAmount = $this->getWastesAreaToDate($first);
+        $secondAmount = $this->getWastesAreaToDate($second);
+
+        return $secondAmount - $firstAmount;
+    }
+
     //Zapisuje pole powieszchni zebranych dotąd odpadków do listy śledzącej postępy zbierania
     private function updateAreaTrack() : void
     {

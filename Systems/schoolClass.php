@@ -119,6 +119,16 @@ class SchoolClass
         return $area;
     }
 
+    public function getWastesAreaBetweenDates(string $first, string $second) : float
+    {
+        $area = 0.0;
+
+        foreach($this->getStudents() as $student)
+            $area += $student->getWastesAreaBetweenDates($first, $second);
+
+        return $area;
+    }
+
     public static function getWastesAreaOfAll() : float
     {
         $area = 0.0;
@@ -145,6 +155,16 @@ class SchoolClass
 
         foreach(SchoolClass::getAllClasses() as $class)
             $area += $class->getWastesAreaInDate($date);
+
+        return $area;
+    }
+    
+    public static function getWastesAreaBetweenDatesOfAll(string $first, string $second) : float
+    {
+        $area = 0.0;
+
+        foreach(SchoolClass::getAllClasses() as $class)
+            $area += $class->getWastesAreaBetweenDates($first, $second);
 
         return $area;
     }

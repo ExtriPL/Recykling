@@ -17,10 +17,6 @@
         header("Location: adminPanel.php");
         exit();
     }
-
-    include("Systems/schoolClass.php");
-    
-    echo SchoolClass::getWastesAreaToDateOfAll("2020-10-26");
 ?>
 
 <html lang='pl'>
