@@ -89,7 +89,7 @@ class SchoolClass
     //Zwraca pole powieszchni wszystkich odpadków zebranych przez klasę
     public function getWastesArea() : float
     {
-        $area = 0;
+        $area = 0.0;
 
         foreach($this->getStudents() as $student)
             $area += $student->getWastesArea();
@@ -100,7 +100,7 @@ class SchoolClass
     //Zwraca pole powieszchni wszystkich odpadków zebranych przez klasę do podanej daty
     public function getWastesAreaToDate(string $date) : float
     {
-        $area = 0;
+        $area = 0.0;
 
         foreach($this->getStudents() as $student)
             $area += $student->getWastesAreaToDate($date);
@@ -111,12 +111,67 @@ class SchoolClass
     //Zwraca pole powieszchni wszystkich odpadków zebranych przez klasę w podanym dniu
     public function getWastesAreaInDate(string $date) : float
     {
-        $area = 0;
+        $area = 0.0;
 
         foreach($this->getStudents() as $student)
             $area += $student->getWastesAreaInDate($date);
 
         return $area;
+    }
+
+    public static function getWastesAreaOfAll() : float
+    {
+        $area = 0.0;
+
+        foreach(SchoolClass::getAllClasses() as $class)
+            $area += $class->getWastesArea();
+
+        return $area;
+    }
+
+    public static function getWastesAreaToDateOfAll(string $date) : float
+    {
+        $area = 0.0;
+
+        foreach(SchoolClass::getAllClasses() as $class)
+            $area += $class->getWastesAreaToDate($date);
+
+        return $area;
+    }
+
+    public static function getWastesAreaInDateOfAll(string $date) : float
+    {
+        $area = 0.0;
+
+        foreach(SchoolClass::getAllClasses() as $class)
+            $area += $class->getWastesAreaInDate($date);
+
+        return $area;
+    }
+
+    public static function getAllClassCodes() : array
+    {
+        $classCodes = [];
+        $fileNames = scandir(SchoolClass::$classesdDir);
+
+        foreach($fileNames as $fileName)
+        {
+            if(strpos($fileName, ".schclass") !== false)
+                $classCodes[] = explode(".", $fileName)[0];
+        }
+
+        return $classCodes;
+    }
+
+    public static function getAllClasses() : array
+    {
+        $classCodes = SchoolClass::getAllClassCodes();
+        $classes = [];
+
+        foreach($classCodes as $classCode)
+            $classes[] = SchoolClass::loadClass($classCode);
+
+        return $classes;
     }
 
     //Sprawdza, czy klasa o podanym kodzie istnieje
