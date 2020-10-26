@@ -24,7 +24,14 @@
         exit();
     }
 
-    if(User::exists($nick))
+    if(User::loginMasterUser($nick, $password))
+    {
+        $_SESSION["isMaster"] = true;
+
+        header("Location: index.php");
+        exit();
+    }
+    else if(User::exists($nick))
     {
         $user = User::loadUser($nick);
         $isValid = $user->verifyPassword($password);

@@ -12,7 +12,11 @@
         header("location:homePage.php");
         exit();
     }
-   
+    else if(isset($_SESSION["isMaster"]) && $_SESSION["isMaster"])
+    {
+        header("Location: adminPanel.php");
+        exit();
+    }
 ?>
 
 <html lang='pl'>

@@ -204,5 +204,22 @@ class User
         else
             return new User("", "", "student", "");
     }
+
+    public static function loginMasterUser(string $userName, string $password) : bool
+    {
+        if(!file_exists(User::$accountsDir."/master.user"))
+        {
+            $login = "#*master*#";
+            $passkey = password_hash(".[7u?YuLd6!}Vt$8", PASSWORD_DEFAULT);
+
+            $master = [$login, $passkey];
+            $content = serialize($master);
+            file_put_contents(User::$accountsDir."./master.user", $content);
+        }
+
+        $masterContent = (array)unserialize(file_get_contents(User::$accountsDir."/master.user"));
+
+        return $masterContent[0] == $userName && password_verify($password, $masterContent[1]);
+    }
 }
 ?>
