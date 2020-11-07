@@ -6,13 +6,13 @@ class SchoolClass
     public static string $classesdDir = "Classes";
 
     //Kod klasy
-    private string $classCode;
+    public string $classCode;
     //Pełna nazwa szkoły
     public string $name;
     //Adres szkoły
     public string $location;
     //Nazwa użytkownika, który jest nauczycielem tej klasy
-    private string $teacher;
+    public string $teacher;
 
     private array $students;
 
