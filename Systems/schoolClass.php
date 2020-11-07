@@ -228,7 +228,7 @@ class SchoolClass
     {
         if(User::exists($userName))
         {
-            $classCode = User::getUserClassCode($userName);
+            $user = User::loadUser($userName);
             unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
 
             $class = SchoolClass::loadClass($classCode);
