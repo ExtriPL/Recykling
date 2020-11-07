@@ -228,12 +228,48 @@ class SchoolClass
     {
         if(User::exists($userName))
         {
-            $classCode = User::getUserClassCode($userName);
-            unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
-
+            $user = User::loadUser($userName);
+            $classCode = $user->classCode;
             $class = SchoolClass::loadClass($classCode);
-            $class->removeStudent($userName);
-            $class->saveClass();
+
+            if($user->isStudent())
+            {
+                unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
+
+                $class->removeStudent($userName);
+                $class->saveClass();
+            }
+            else
+                $class->remove();
+        }
+    }
+
+    public function remove()
+    {
+        $classCode = $this->classCode;
+
+        //Remove students
+        foreach($this->students as $student)
+        {
+            unlink(User::$accountsDir."/".$classCode."/".$student.".user");
+            SchoolClass::removeUser($student);
+        }
+        $this->students = [];
+
+        //Remove teacher
+        $teacherName = $this->teacher;
+        unlink(User::$accountsDir."/".$classCode."/".$teacherName.".user");
+
+        //Remove class file
+        unlink(SchoolClass::$classesdDir."/".$classCode.".schclass");
+    }
+
+    public static function removeClass($classCode)
+    {
+        if(SchoolClass::exists($classCode))
+        {
+            $class = SchoolClass::loadClass($classCode);
+            $class->remove();
         }
     }
 }
