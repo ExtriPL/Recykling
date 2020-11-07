@@ -8,11 +8,11 @@ class SchoolClass
     //Kod klasy
     private string $classCode;
     //Pełna nazwa szkoły
-    public string $name;
+    private string $name;
     //Adres szkoły
-    public string $location;
+    private string $location;
     //Nazwa użytkownika, który jest nauczycielem tej klasy
-    public string $teacher;
+    private string $teacher;
 
     private array $students;
 
@@ -229,11 +229,48 @@ class SchoolClass
         if(User::exists($userName))
         {
             $user = User::loadUser($userName);
-            unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
-
+            $classCode = $user->classCode;
             $class = SchoolClass::loadClass($classCode);
-            $class->removeStudent($userName);
-            $class->saveClass();
+
+            if($user->isStudent())
+            {
+                unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
+
+                $class->removeStudent($userName);
+                $class->saveClass();
+            }
+            else
+                $class->remove();
+        }
+    }
+
+    //Usuwa klase z plików razem z użytkownikami
+    public function remove()
+    {
+        $classCode = $this->classCode;
+
+        //Remove students
+        foreach($this->students as $student)
+        {
+            unlink(User::$accountsDir."/".$classCode."/".$student.".user");
+            SchoolClass::removeUser($student);
+        }
+        $this->students = [];
+
+        //Remove teacher
+        $teacherName = $this->teacher;
+        unlink(User::$accountsDir."/".$classCode."/".$teacherName.".user");
+
+        //Remove class file
+        unlink(SchoolClass::$classesdDir."/".$classCode.".schclass");
+    }
+
+    public static function removeClass($classCode)
+    {
+        if(SchoolClass::exists($classCode))
+        {
+            $class = SchoolClass::loadClass($classCode);
+            $class->remove();
         }
     }
 }
