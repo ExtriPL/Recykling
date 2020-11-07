@@ -244,6 +244,7 @@ class SchoolClass
         }
     }
 
+    //Usuwa klase z plików razem z użytkownikami
     public function remove()
     {
         $classCode = $this->classCode;
