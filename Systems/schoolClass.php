@@ -8,11 +8,11 @@ class SchoolClass
     //Kod klasy
     private string $classCode;
     //Pełna nazwa szkoły
-    private string $name;
+    public string $name;
     //Adres szkoły
-    private string $location;
+    public string $location;
     //Nazwa użytkownika, który jest nauczycielem tej klasy
-    private string $teacher;
+    public string $teacher;
 
     private array $students;
 

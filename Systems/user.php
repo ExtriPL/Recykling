@@ -9,7 +9,7 @@ class User
     //Hasło w postaci hasha
     private string $passKey;
     //Rola użytkownika w klasie ("student" - uczeń, "teacher" - nauczyciel)
-    private string $role;
+    public string $role;
     //Kod klasy, do której przypisany jest użytkownik
     public string $classCode;
     //Lista odpadków, które zebrał użytkownik

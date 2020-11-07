@@ -56,4 +56,5 @@ span a
 span a:hover
 {
     color:black;
+    /* color:rgba(97, 147, 255, 0.2); */
 }

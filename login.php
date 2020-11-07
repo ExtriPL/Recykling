@@ -28,7 +28,7 @@
     {
         $_SESSION["isMaster"] = true;
 
-        header("Location: index.php");
+        header("Location: adminPanel.php");
         exit();
     }
     else if(User::exists($nick))

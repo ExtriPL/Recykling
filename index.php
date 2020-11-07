@@ -12,11 +12,12 @@
         header("location:homePage.php");
         exit();
     }
-    else if(isset($_SESSION["isMaster"]) && $_SESSION["isMaster"])
+    if(isset($_SESSION["isMaster"]) && $_SESSION["isMaster"])
     {
-        header("Location: adminPanel.php");
+        header("location:adminPanel.php");
         exit();
     }
+    
 ?>
 
 <html lang='pl'>
@@ -62,7 +63,6 @@
             ?>
             </b>
         </span>
-        <span style="float:right"><a href="registerUser.php">Zarejestruj się</a></span>
         </div>
     </body>
 </html>

@@ -1,14 +1,14 @@
 <?php
     session_start();
 
-    if(!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"])
-    {
-        header("location:index.php");
+    if ((!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"]) && (!isset($_SESSION["isMaster"]) || !$_SESSION["isMaster"])) {
+        header("location:index.php");    
         exit();
     }
 
     unset($_SESSION["loggedIn"]);
     unset($_SESSION["userName"]);
+    unset($_SESSION["isMaster"]);
 ?>
 
 <html lang='pl'>

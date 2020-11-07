@@ -74,7 +74,7 @@
         $user->saveUser();
 
         $_SESSION["back-message"] = "Pomyślnie zarejestrowano konto";
-        header("Location: index.php");
+        header("Location: registerUser.php");
         exit();
     }
     else
