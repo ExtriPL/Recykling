@@ -32,7 +32,7 @@ if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
 </head>
 
 <body>
@@ -81,26 +81,38 @@ if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
             <div class="col">
                 <div class="jumbotron">
                     <h1 class="center">Rejestracja</h1><br><br>
-                    <form action="register.php" method="post">
+                    <form autocomplete="off" action="register.php" method="post">
 
-                        <input required placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class="form-control" type="text" name="nickname"><br>
-                        <input required placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1" class="form-control" type="password" name="password"><br>
+                        <!-- <div class="form-group"> -->
+                        <input autocomplete="false" required placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class="form-control" type="text" name="nickname"><br>
+                        <input autocomplete="false" required placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1" class="form-control" type="password" name="password"><br>
 
 
                         <label class="text-black">Rola:</label>
-                        <input type="radio" id="role2" name="role" value="student" onclick="chanceVisible(true);" checked><label class="text-black" for="role2">Uczeń</label>
-                        <?php
-                        if (isset($_SESSION["isMaster"]) && $_SESSION["isMaster"]) echo '<input type="radio" id="role1" name="role" value="teacher" onclick="chanceVisible(false);"><label class="text-black" for="role1">Nauczyciel</label><br>'; ?>
+                        <input type="radio" id="role1" name="role" value="student" checked><label class="text-black" for="role1">Uczeń</label>
+                        <input type="radio" id="role2" name="role" value="teacher"><label class="text-black" for="role2">Nauczyciel</label><br>
+
+                        <input placeholder="Kod klasy" aria-label="Kod klasy" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="classCode1" name="classCode"><br>
+                        <input placeholder="Nazwa szkoły" aria-label="Nazwa szkoły" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="schoolName" name="schoolName"><br>
+                        <input placeholder="Adres szkoły" aria-label="Adres szkoły" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="schoolLocation" name="schoolLocation">
+                        <select class="form-control addStudent" name="classCode" id="classCode2">
+                            <?php
+                            $classNames = SchoolClass::getAllClassCodes();
+                            if (count($classNames != 0)) 
+                            {
+                                foreach ($classNames as $c) 
+                                {
+                                    echo "<option value='$c'>$c</option>";
+                                }
+                            }
+
+                            ?>
+                        </select>
+                        <br>
+                        <!-- </div> -->
 
 
-                        <div id="teacherSelected" style="display:none">
-                            <input placeholder="Nazwa szkoły" aria-label="Nazwa szkoły" aria-describedby="basic-addon1" class="form-control" type="text" id="schoolName" name="schoolName"><br>
-                            <input placeholder="Adres szkoły" aria-label="Adres szkoły" aria-describedby="basic-addon1" class="form-control" type="text" id="schoolLocation" name="schoolLocation"><br>
-
-                        </div>
-
-                        <input required placeholder="Kod klasy" aria-label="Kod klasy" aria-describedby="basic-addon1" class="form-control" type="text" id="classCode" name="classCode"><br>
-                        <div class="center"><button type="submit" class="btn btn-primary">Zarejestruj się</button></div>
+                        <div class="center"><button type="submit" class="btn btn-primary">Zarejestruj</button></div>
                         <div><b>
 
                                 <?php

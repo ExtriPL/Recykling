@@ -1,15 +1,54 @@
-function chanceVisible(student)
+const teacherEls = document.querySelectorAll(".addTeacher");
+const studentEls = document.querySelectorAll(".addStudent");
+
+
+const roleStudentRadioEl = document.getElementById("role1");
+const roleTeacherRadioEl = document.getElementById("role2");
+
+teacherEls.forEach((El)=>
 {
-    if(student)
+    El.style.display = "none";
+    El.required = false;
+});
+studentEls.forEach((El)=>
+{
+    El.style.display = "block";
+    El.required = true;
+});
+
+
+if(roleTeacherRadioEl)
+{
+    roleStudentRadioEl.addEventListener('click',()=>
     {
-        document.getElementById("teacherSelected").style.display = "none";
-        document.getElementById("schoolName").required = false;
-        document.getElementById("schoolLocation").required = false;
-    }
-    else
+        teacherEls.forEach((El)=>
+        {
+            El.style.display = "none";
+            El.required = false;
+        });
+        studentEls.forEach((El)=>
+        {
+            El.style.display = "block";
+            El.required = true;
+        });
+    });
+
+
+    roleTeacherRadioEl.addEventListener('click',()=>
     {
-        document.getElementById("teacherSelected").style.display = "block";
-        document.getElementById("schoolName").required = true;
-        document.getElementById("schoolLocation").required = true;
-    }
+        
+        teacherEls.forEach((El)=>
+        {
+            El.style.display = "block";
+            El.required = true;
+        });
+        studentEls.forEach((El)=>
+        {
+            El.style.display = "none";
+            El.required = false;
+        });
+    });
 }
+
+
+//<?php if (isset($_SESSION["isMaster"]) && $_SESSION["isMaster"]) echo ''; ?>
