@@ -1,4 +1,5 @@
 <?php
+include("waste.php");
 class User
 {
     //Folder, w którym przechowywani są użytkownicy
@@ -95,8 +96,6 @@ class User
     //Zwraca sume pól powieszchni wszystkich odpadków, jakie posiada użytkownik
     public function getWastesArea() : float
     {
-        include("waste.php");
-
         $area = 0;
 
         $wastes = Waste::loadWastes();
@@ -270,21 +269,6 @@ class User
         }
 
         return $userList;
-    }
-
-    //Usuwa użytkownika z bazy
-    public static function removeUser($userName)
-    {
-        if(User::exists($userName))
-        {
-            include("schoolClass.php");
-            $classCode = User::getUserClassCode($userName);
-            unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
-
-            $class = SchoolClass::loadClass($classCode);
-            $class->removeStudent($userName);
-            $class->saveClass();
-        }
     }
 }
 ?>

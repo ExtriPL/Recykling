@@ -1,4 +1,5 @@
 <?php
+include("user.php");
 class SchoolClass
 {
     //Folder, w którym przechowywane są pliki klas
@@ -77,8 +78,6 @@ class SchoolClass
     //Zwraca instancje uczniów, którzy należą do klasy
     public function getStudents() : array
     {
-        include("user.php");
-
         $students = array();
         foreach($this->students as $student)
             $students[] = User::loadUser($student);
@@ -222,6 +221,20 @@ class SchoolClass
         }
         else
             return new SchoolClass("", "", "");
+    }
+
+    //Usuwa użytkownika z bazy
+    public static function removeUser($userName)
+    {
+        if(User::exists($userName))
+        {
+            $classCode = User::getUserClassCode($userName);
+            unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
+
+            $class = SchoolClass::loadClass($classCode);
+            $class->removeStudent($userName);
+            $class->saveClass();
+        }
     }
 }
 ?>
