@@ -263,6 +263,9 @@ class SchoolClass
 
         //Remove class file
         unlink(SchoolClass::$classesdDir."/".$classCode.".schclass");
+
+        //Remove class folder
+        rmdir(User::$accountsDir."/".$classCode);
     }
 
     public static function removeClass($classCode)
