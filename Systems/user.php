@@ -1,6 +1,4 @@
 <?php
-include("waste.php");
-
 class User
 {
     //Folder, w którym przechowywani są użytkownicy
@@ -97,6 +95,8 @@ class User
     //Zwraca sume pól powieszchni wszystkich odpadków, jakie posiada użytkownik
     public function getWastesArea() : float
     {
+        include("waste.php");
+
         $area = 0;
 
         $wastes = Waste::loadWastes();
@@ -220,7 +220,6 @@ class User
         if($userClass !== false)
         {
             $userContent = file_get_contents(User::$accountsDir."/".$userClass."/".$userName.".user", true);
-
             return unserialize($userContent);
         }
         else
@@ -242,6 +241,50 @@ class User
         $masterContent = (array)unserialize(file_get_contents(User::$accountsDir."/master.user"));
 
         return $masterContent[0] == $userName && password_verify($password, $masterContent[1]);
+    }
+
+    //Wczytuje wszystkich użytkowników jako liste
+    public static function loadAllUsers() : array
+    {
+        $userList = [];
+
+        if(!file_exists(User::$accountsDir))
+            mkdir(User::$accountsDir);
+
+        $userFolders = scandir(User::$accountsDir);
+
+        foreach($userFolders as $folder)
+        {
+            if($folder != "." && $folder != ".." && is_dir(User::$accountsDir."/".$folder))
+            {
+                $users = scandir(User::$accountsDir."/".$folder);
+                foreach($users as $user)
+                {
+                    if($user != "." && $user != "..")
+                    {
+                        $userContent = file_get_contents(User::$accountsDir."/".$folder."/".$user, true);
+                        $userList[] = unserialize($userContent);
+                    }
+                }
+            }
+        }
+
+        return $userList;
+    }
+
+    //Usuwa użytkownika z bazy
+    public static function removeUser($userName)
+    {
+        if(User::exists($userName))
+        {
+            include("schoolClass.php");
+            $classCode = User::getUserClassCode($userName);
+            unlink(User::$accountsDir."/".$classCode."/".$userName.".user");
+
+            $class = SchoolClass::loadClass($classCode);
+            $class->removeStudent($userName);
+            $class->saveClass();
+        }
     }
 }
 ?>

@@ -1,6 +1,4 @@
 <?php
-include("user.php");
-
 class SchoolClass
 {
     //Folder, w którym przechowywane są pliki klas
@@ -79,6 +77,8 @@ class SchoolClass
     //Zwraca instancje uczniów, którzy należą do klasy
     public function getStudents() : array
     {
+        include("user.php");
+
         $students = array();
         foreach($this->students as $student)
             $students[] = User::loadUser($student);
