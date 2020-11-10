@@ -37,7 +37,10 @@ body {
     position: relative;
     background-color: white;
 }
-
+.border
+{
+    border: 1px solid red;
+}
 .name {
     text-decoration: solid;
     text-transform: capitalize;
@@ -92,28 +95,46 @@ body {
 }
 
 .basket-item:nth-child(2n) {
-    background-color:#ececec;
+    background-color: #ececec;
 }
 
 .basket-item:hover {
     background-color: #e7e7e7;
 }
 
-.type:hover
-{
+.type:hover {
     background-color: #e7e7e7;
 }
-.item-name
-{
-    margin-left:10px;
+
+.item-name {
+    text-transform: capitalize;
+    margin-left: 10px;
 }
 
 .amount {
     margin-right: 20px;
 }
 
+.submit-button {
+    margin-top:20px;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.342);
+    font-size: 1.5rem;
+    border:none;
+    border-radius: 5px;
+    background-color: rgb(13, 199, 190);
+    padding: 5px 15px;
+    color:white;
+}
+.submit-button:hover{
+    background-color: lightseagreen;
+}
+
 @media (max-width: 800px) {
     .types {
+        width: 100%;
+    }
+    .basket
+    {
         width: 100%;
     }
 
