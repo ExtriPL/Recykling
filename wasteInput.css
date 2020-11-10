@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+
+}
+
+.inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.types {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 50%;
+    max-width: 666px;
+}
+
+.type {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.342);
+    position: relative;
+    background-color: white;
+}
+
+.name {
+    text-decoration: solid;
+    text-transform: capitalize;
+    text-align: center;
+    position: absolute;
+    top: 30%;
+}
+
+.add {
+    margin: 5px;
+}
+
+.type .buttons {
+    display: none;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    bottom: 20%;
+}
+
+.basket {
+    width: 50%;
+    max-width: 666px;
+    text-align: center;
+}
+
+.basket-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.basket-item {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.342);
+    position: relative;
+    background-color: white;
+}
+
+.basket-item:nth-child(2n) {
+    background-color:#ececec;
+}
+
+.basket-item:hover {
+    background-color: #e7e7e7;
+}
+
+.type:hover
+{
+    background-color: #e7e7e7;
+}
+.item-name
+{
+    margin-left:10px;
+}
+
+.amount {
+    margin-right: 20px;
+}
+
+@media (max-width: 800px) {
+    .types {
+        width: 100%;
+    }
+
+    .type {
+        width: 150px;
+        height: 150px;
+    }
+
+    .name {
+        top: 20%;
+    }
+
+    .add {
+        bottom: 20%;
+    }
+
+    .type .buttons {
+        display: unset;
+    }
+}

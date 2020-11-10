@@ -44,18 +44,17 @@ include("Systems/schoolClass.php");
         </div>
     </nav>
     <?php
-    if(isset($_SESSION["back-message"])) 
-    {
-        echo "<div class='alert alert-info alert-dismissable fade show'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>".$_SESSION["back-message"]."</div>";
+    if (isset($_SESSION["back-message"])) {
+        echo "<div class='alert alert-info alert-dismissable fade show'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" . $_SESSION["back-message"] . "</div>";
         unset($_SESSION["back-message"]);
     }
     ?>
     <div class="container">
-        <h1 class="display center">Wszyscy użytkownicy</h1>
-        <div class="row">
+        <div class="row justify-content-center">
 
-            <div class="col">
-                <table class="table table-striped table-inverse">
+            <div class="col-auto">
+                <h1 class="display center">Wszyscy użytkownicy</h1>
+                <table class="table table-striped table-inverse table-responsive">
                     <thead class="thead-inverse">
                         <tr>
                             <th>Nazwa</th>
@@ -73,13 +72,13 @@ include("Systems/schoolClass.php");
                         foreach ($allUsers as $user) {
                             $schoolClass = SchoolClass::loadClass($user->classCode);
                             echo "<tr>";
-                            echo "<td>".$user->userName."</td>";
-                            echo "<td>".($user->role == "teacher" ? "Nauczyciel" : "Uczeń")."</td>";
-                            echo "<td>".$schoolClass->name."</td>";
-                            echo "<td>".$schoolClass->location."</td>";
-                            echo "<td>".$schoolClass->teacher."</td>";
-                            echo "<td>".$user->classCode."</td>";
-                            echo "<td><a href='removeUser.php?username=".$user->userName."'><button class='btn btn-danger'>Usuń</button></a></td>";
+                            echo "<td>" . $user->userName . "</td>";
+                            echo "<td>" . ($user->role == "teacher" ? "Nauczyciel" : "Uczeń") . "</td>";
+                            echo "<td>" . $schoolClass->name . "</td>";
+                            echo "<td>" . $schoolClass->location . "</td>";
+                            echo "<td>" . $schoolClass->teacher . "</td>";
+                            echo "<td>" . $user->classCode . "</td>";
+                            echo "<td><a href='removeUser.php?username=" . $user->userName . "'><button class='btn btn-danger'>Usuń</button></a></td>";
                             echo "</tr>";
                         }
                         ?>
@@ -89,6 +88,104 @@ include("Systems/schoolClass.php");
             </div>
 
         </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <h1 class="display center">Nauczyciele</h1>
+                <table class="table table-striped table-inverse table-responsive">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Nazwa użytkownika</th>
+                            <th>Szkoła</th>
+                            <th>Lokalizacja</th>
+                            <th>Klasa</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $allUsers = User::loadAllUsers();
+                        foreach ($allUsers as $user) {
+                            if ($user->role == "teacher") {
+                                $schoolClass = SchoolClass::loadClass($user->classCode);
+                                echo "<tr>";
+                                echo "<td>" . $user->userName . "</td>";
+                                echo "<td>" . $schoolClass->name . "</td>";
+                                echo "<td>" . $schoolClass->location . "</td>";
+                                echo "<td>" . $user->classCode . "</td>";
+                                echo "<td><a href='removeUser.php?username=" . $user->userName . "'><button class='btn btn-danger'>Usuń</button></a></td>";
+                                echo "</tr>";
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <h1 class="display center">Klasy</h1>
+                <span class='text-danger'> Usunięcie klasy powoduje usunięcie jej nauczyciela!</span>
+                <table class="table table-striped table-inverse table-responsive">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Klasa</th>
+                            <th>Nauczyciel</th>
+                            <th>Szkoła</th>
+                            <th>Lokalizacja</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $schoolClasses = SchoolClass::getAllClasses();
+                        foreach ($schoolClasses as $schoolClass) {
+                            echo "<tr>";
+                            echo "<td>" . $schoolClass->classCode . "</td>";
+                            echo "<td>" . $schoolClass->teacher . "</td>";
+                            echo "<td>" . $schoolClass->name . "</td>";
+                            echo "<td>" . $schoolClass->location . "</td>";
+                            echo "<td><a href='adminPanel.php?classCode=" . $schoolClass->classCode . "'><button class='btn btn-outline-info'>Pokaż uczniów</button></a>&nbsp&nbsp";
+                            echo "<a href='removeUser.php?classCode=" . $schoolClass->classCode . "'><button class='btn btn-danger'>Usuń</button></a></td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php
+        if (isset($_GET["classCode"])) {
+            echo '<div class="row justify-content-center">
+            <div class="col-auto">
+                <h1 class="display center">Klasa '.$_GET["classCode"].'</h1>
+                <table class="table table-striped table-inverse table-responsive">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Nazwa ucznia</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+
+
+            $class = SchoolClass::loadClass($_GET["classCode"]);
+            $students = $class->getStudents();
+            foreach ($students as $user) {
+                if ($user->role != "teacher") {
+                    $schoolClass = SchoolClass::loadClass($user->classCode);
+                    echo "<tr>";
+                    echo "<td>" . $user->userName . "</td>";
+                    // echo "<td><a href='userPage.php?classCode=" . $schoolClass->classCode . "'><button class='btn btn-outline-info'>Pokaż wyniki</button></a>&nbsp&nbsp";
+                    echo "<td><a href='removeUser.php?username=" . $user->userName . "'><button class='btn btn-danger'>Usuń</button></a></td>";
+                    echo "</tr>";
+                }
+            }
+            echo "</tbody>
+            </table>
+        </div>
+    </div>";
+        }
+        ?>
     </div>
 </body>
 

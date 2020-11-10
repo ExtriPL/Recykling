@@ -1,3 +1,6 @@
+const formEls = document.querySelectorAll("#regForm input, #regForm select");
+
+
 const teacherEls = document.querySelectorAll(".addTeacher");
 const studentEls = document.querySelectorAll(".addStudent");
 
@@ -9,13 +12,21 @@ teacherEls.forEach((El)=>
 {
     El.style.display = "none";
     El.required = false;
+    El.disabled = true;
 });
 studentEls.forEach((El)=>
 {
     El.style.display = "block";
     El.required = true;
+    El.disabled = false;
 });
 
+
+formEls.forEach((inputEl)=>{
+    inputEl.addEventListener('input',()=>{
+        document.querySelector(".backMsg").innerHTML="";
+    });
+});
 
 if(roleTeacherRadioEl)
 {
@@ -25,11 +36,13 @@ if(roleTeacherRadioEl)
         {
             El.style.display = "none";
             El.required = false;
+            El.disabled = true;
         });
         studentEls.forEach((El)=>
         {
             El.style.display = "block";
             El.required = true;
+            El.disabled = false;
         });
     });
 
@@ -41,14 +54,15 @@ if(roleTeacherRadioEl)
         {
             El.style.display = "block";
             El.required = true;
+            El.disabled = false;
         });
         studentEls.forEach((El)=>
         {
             El.style.display = "none";
             El.required = false;
+            El.disabled = true;
         });
     });
 }
 
 
-//<?php if (isset($_SESSION["isMaster"]) && $_SESSION["isMaster"]) echo ''; ?>

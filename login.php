@@ -3,8 +3,8 @@
 
     include("Systems/user.php");
 
-    $nick = strtolower(htmlspecialchars($_POST['nickname']));
-    $password = htmlspecialchars($_POST['password']);
+    $nick = strtolower(htmlspecialchars($_POST['nazwa1']));
+    $password = htmlspecialchars($_POST['nazwa2']);
 
     function discardLogin() : void
     {

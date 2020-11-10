@@ -60,7 +60,7 @@ include("Systems/schoolClass.php");
                     if (!($currentUser->isStudent())) {
                         echo '
                         <li class="nav-item">
-                            <a class="nav-link" href="registerUser.php">Zarejestruj uczniów</a>
+                            <a class="nav-link" href="teacherPanel.php">Panel klasy</a>
                         </li>
                         ';
                     }

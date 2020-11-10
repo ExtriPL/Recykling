@@ -49,8 +49,8 @@
         <div class = "container-fluid col-lg-4 col-xs-12 login-panel center">
         
             <form action="login.php" method = "post">
-                <input  placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class = "form-control" type="text" name="nickname"><br>
-                <input  placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1" class = "form-control" type="password" name="password"><br>
+                <input  placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class = "form-control" type="text" name="nazwa1"><br>
+                <input  placeholder="Hasło" aria-label="Hasło" aria-describedby="basic-addon1" class = "form-control" type="password" name="nazwa2"><br>
                 <button class="btn btn-light" action = "submit">ZALOGUJ</button>
             </form>
             <span class='error-msg'><b>

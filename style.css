@@ -19,6 +19,11 @@ body
 
 }
 
+th
+{
+    text-align: center;
+}
+
 label
 {
     color:white;   

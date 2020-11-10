@@ -6,6 +6,7 @@ function addItem()
     let wasteQuantity = parseInt($("#wastequantity").val());
     addToBasket(wasteName,wasteQuantity);
     $("#data").val(JSON.stringify(items));
+    console.log(items);
 }
 
 function addToBasket(itemName,itemQuantity)

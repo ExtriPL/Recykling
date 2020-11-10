@@ -1,11 +1,16 @@
 <?php
 session_start();
 include("Systems/schoolClass.php");
+
+
 if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
     $currentuserName = $_SESSION["userName"];
     $currentUser = User::loadUser($_SESSION["userName"]);
     if ($currentUser->isStudent()) {
         header("location:index.php");
+        exit();
+    } else {
+        header("location:teacherPanel.php");
         exit();
     }
 } else if (!isset($_SESSION["isMaster"]) || !$_SESSION["isMaster"]) {
@@ -81,7 +86,7 @@ if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
             <div class="col">
                 <div class="jumbotron">
                     <h1 class="center">Rejestracja</h1><br><br>
-                    <form autocomplete="off" action="register.php" method="post">
+                    <form autocomplete="off" action="register.php" method="post" id="regForm">
 
                         <!-- <div class="form-group"> -->
                         <input autocomplete="false" required placeholder="Nazwa użytkownika" aria-label="Nazwa użytkownika" aria-describedby="basic-addon1" class="form-control" type="text" name="nickname"><br>
@@ -90,30 +95,31 @@ if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
 
                         <label class="text-black">Rola:</label>
                         <input type="radio" id="role1" name="role" value="student" checked><label class="text-black" for="role1">Uczeń</label>
-                        <input type="radio" id="role2" name="role" value="teacher"><label class="text-black" for="role2">Nauczyciel</label><br>
+                        <?php if (isset($_SESSION["isMaster"]) && $_SESSION["isMaster"]) echo '<input type="radio" id="role2" name="role" value="teacher"><label class="text-black" for="role2">Nauczyciel</label>'; ?>
 
-                        <input placeholder="Kod klasy" aria-label="Kod klasy" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="classCode1" name="classCode"><br>
-                        <input placeholder="Nazwa szkoły" aria-label="Nazwa szkoły" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="schoolName" name="schoolName"><br>
-                        <input placeholder="Adres szkoły" aria-label="Adres szkoły" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="schoolLocation" name="schoolLocation">
+
+                        <br><label for="classCode2" class="addSutdent text-black">Klasa:</label>
+
                         <select class="form-control addStudent" name="classCode" id="classCode2">
                             <?php
                             $classNames = SchoolClass::getAllClassCodes();
-                            if (count($classNames != 0)) 
-                            {
-                                foreach ($classNames as $c) 
-                                {
+                            if (count($classNames != 0)) {
+                                foreach ($classNames as $c) {
                                     echo "<option value='$c'>$c</option>";
                                 }
                             }
 
                             ?>
                         </select>
+                        <input placeholder="Kod klasy" aria-label="Kod klasy" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="classCode1" name="classCode"><br>
+                        <input placeholder="Nazwa szkoły" aria-label="Nazwa szkoły" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="schoolName" name="schoolName"><br>
+                        <input placeholder="Adres szkoły" aria-label="Adres szkoły" aria-describedby="basic-addon1" class="form-control addTeacher" type="text" id="schoolLocation" name="schoolLocation">
                         <br>
                         <!-- </div> -->
 
 
-                        <div class="center"><button type="submit" class="btn btn-primary">Zarejestruj</button></div>
-                        <div><b>
+                        <div class="center"><button id="submitBtn" type="submit" class="btn btn-primary">Zarejestruj</button></div>
+                        <div class="backMsg"><b>
 
                                 <?php
                                 if (isset($_SESSION["back-message"])) {

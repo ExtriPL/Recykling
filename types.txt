@@ -1,4 +1,8 @@
 {
 	"butelka":10,
-	"puszka":15
+	"puszka":15,
+	"aaa":10,
+	"aaaaa":15,
+	"baaautelka":10,
+	"dasd":15
 }
