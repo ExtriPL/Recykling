@@ -3,8 +3,7 @@ session_start();
 if (isset($_SESSION["isMaster"]) && $_SESSION["isMaster"]) {
     header("location:adminPanel.php");
     exit();
-}
-else if (!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"]) {
+} else if (!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"]) {
     header("location:index.php");
 
     exit();
@@ -19,62 +18,21 @@ include("Systems/schoolClass.php");
     <meta charset='utf-8'>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <style>
-        body {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.pomysly-na.pl/wp-content/uploads/inspiracje/jak-kreatywnie-820x546.jpg');
-        }
-    </style>
-
-    <!-- Bootstrap CSS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="scripts/datapoints.js"></script>
+    <?php require("attachments/links.php") ?>
+    <title>Strona główna</title>
 
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Recykling</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="homePage.php">Główna</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="userPage.php">Strona użytkownika </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="wasteInput.php">Dodaj odpadki</a>
-                </li>
-                <?php
-                    $currentuserName = $_SESSION["userName"];
-                    $currentUser = User::loadUser($_SESSION["userName"]);
-                    if (!($currentUser->isStudent())) {
-                        echo '
-                        <li class="nav-item">
-                            <a class="nav-link" href="teacherPanel.php">Panel klasy</a>
-                        </li>
-                        ';
-                    }
-                ?>
-            </ul>
-            <form class="form-inline my-2 my-lg-0" action="logout.php" method="POST">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Wyloguj się</button>
-            </form>
-        </div>
-    </nav>
+    <?php $filename = basename(__FILE__, '.php');
+    require("attachments/navbar.php"); ?>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-6 col-sm-12">
+            <div class="col-lg-12 col-sm-12">
                 <div class="jumbotron">
                     <h1 class="display-4 center">Razem zebraliśmy do tej pory:</h1>
                     <div class="display-1 center" style="display:flex;justify-content:center;align-items:center">
@@ -93,7 +51,9 @@ include("Systems/schoolClass.php");
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-12">
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
                 <div class="row">
                     <div class="col">
                         <div class="jumbotron">
@@ -123,7 +83,7 @@ include("Systems/schoolClass.php");
                                             xAxes: [{
                                                 ticks: {
                                                     suggestedMin: min,
-                                                    suggestedMax: cel,
+                                                    // suggestedMax: cel,
                                                     beginAtZero: true
                                                 }
                                             }]
@@ -137,53 +97,79 @@ include("Systems/schoolClass.php");
                 <div class="row">
                     <div class="col">
                         <div class="jumbotron">
+                            <h1 class="display-3 center">Ilość zebrana przez wszystkich</h1><br>
+                            <button class="btn btn-primary" id="all">Cały okres zbierania</button> <button class="btn btn-primary" id="month">Miesiąc</button> <button class="btn btn-primary" id="week">Tydzień</button>
                             <canvas id="wgCzasu" width="400" height="200"></canvas>
+                            <?php
+                            function array_push_assoc($array, $key, $value)
+                            {
+                                $array[$key] = $value;
+                                return $array;
+                            }
+
+                            $startDate = new DateTime("2020-9-1");
+                            $endDate = new DateTime();
+                            $diff = date_diff($startDate, $endDate)->format('%a');
+
+                            $allTimeDatapoints = array();
+                            $thisMonthDatapoints = array();
+                            $thisWeekDatapoints = array();
+
+                            for ($i = 0; $i < 30; $i++) {
+                                //  echo floor($i*($diff/30));
+                                $startDate = new DateTime("2020-9-1");
+                                $t = floor($i * ($diff / 30));
+                                $date = date_add($startDate, new DateInterval("P" . $t . "D"));
+                                $date = $date->format("Y-m-d");
+                                $allTimeDatapoints = array_push_assoc($allTimeDatapoints, $date, SchoolClass::getWastesAreaToDateOfAll($date));
+                            }
+                            $allTimeDatapoints = JSON_encode($allTimeDatapoints);
+                            // echo $datapoints;
+
+                            //miesiac
+                            for ($i = 30; $i >= 0; $i--) {
+                                $endDate = new DateTime();
+                                $date = date_sub($endDate, new DateInterval("P" . $i . "D"));
+                                $date = $date->format("Y-m-d");
+                                // SchoolClass::getWastesAreaToDateOfAll($date)
+                                $thisMonthDatapoints = array_push_assoc($thisMonthDatapoints, $date, SchoolClass::getWastesAreaToDateOfAll($date));
+                            }
+
+                            $thisMonthDatapoints = JSON_encode($thisMonthDatapoints);
+
+                            //tydzien
+                            for ($i = 7; $i >= 0; $i--) {
+                                $endDate = new DateTime();
+                                $date = date_sub($endDate, new DateInterval("P" . $i . "D"));
+                                $date = $date->format("Y-m-d");
+                                // SchoolClass::getWastesAreaToDateOfAll($date)
+                                $thisWeekDatapoints = array_push_assoc($thisWeekDatapoints, $date, SchoolClass::getWastesAreaToDateOfAll($date));
+                            }
+                            $thisWeekDatapoints = JSON_encode($thisWeekDatapoints);
+
+                            ?>
+
                             <script>
-                                // let labels = [];
+                                const allTimeAmounts = <?php echo $allTimeDatapoints ?>;
+                                const thisMonthAmounts = <?php echo $thisMonthDatapoints ?>;
+                                const thisWeekAmounts = <?php echo $thisWeekDatapoints ?>;
+                                let datapoints = [];
+                                let labels = [];
 
-                                let dates = [new Date(2020, 9, 20), new Date(2020, 9, 21), new Date(2020, 9, 22), new Date()];
-                                let days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
-                                let months = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-
-                                function getLabel(date) {
-                                    return days[date.getDay()] + " " + date.getDate() + " " + months[date.getMonth()];
-                                }
-
-
-                                var ctx = document.getElementById('wgCzasu').getContext('2d');
-                                let chart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: {
-                                        datasets: [{
-                                            label: 'First dataset',
-                                            data: [{
-                                                x: dates[0],
-                                                y: 100
-                                            }, {
-                                                x: dates[1],
-                                                y: 400
-                                            }, {
-                                                x: dates[2],
-                                                y: 700
-                                            }, {
-                                                x: dates[3],
-                                                y: 1000
-                                            }]
-                                        }],
-                                        labels: [getLabel(dates[0]), getLabel(dates[1]), getLabel(dates[2]), getLabel(dates[3])]
-                                    },
-                                    options: {
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                    suggestedMin: 50,
-                                                    suggestedMax: cel,
-                                                    stepSize: 500
-                                                }
-                                            }]
-                                        }
-                                    }
+                                document.querySelector("#all").addEventListener('click', () => {
+                                    prepareDatapoints(allTimeAmounts);
                                 });
+
+                                document.querySelector("#month").addEventListener('click', () => {
+                                    prepareDatapoints(thisMonthAmounts);
+                                });
+
+                                document.querySelector("#week").addEventListener('click', () => {
+                                    prepareDatapoints(thisWeekAmounts);
+                                });
+
+                                prepareChart();
+                                prepareDatapoints(allTimeAmounts);
                             </script>
                         </div>
                     </div>

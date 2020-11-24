@@ -112,7 +112,8 @@ class User
     //Zwraca pole powieszchni wszystkich odpadków, które zostały uzbierane do podanego dnia(Data w formacie Y-m-d)
     public function getWastesAreaToDate(string $date) : float
     {
-        echo array_key_exists($date, $this->areaTrack);
+        // echo array_key_exists($date, $this->areaTrack);
+        if(!isset($this->areaTrack)) return 0;
 
         if(array_key_exists($date, $this->areaTrack))
             return $this->areaTrack[$date];

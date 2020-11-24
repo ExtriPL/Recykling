@@ -13,7 +13,7 @@ wasteTypes.forEach(element => {
     newEl.innerHTML = `
 
         <span class="name">
-           <b> ${element.name} </b>
+           <b> ${element.name.replace('_', ' ').replace('-', '.')} </b>
         </span>
         <br>
         <span class="buttons">
@@ -62,7 +62,7 @@ document.querySelector(".submit-button").addEventListener("click", () => {
             `;
         }
     };
-    xhttp.open("POST", "responseTest.php?d=" + JSON.stringify(itemsInBasket), true);
+    xhttp.open("POST", "../responseTest.php?d=" + JSON.stringify(itemsInBasket), true);
     xhttp.send();
 
     itemsInBasket = {};
@@ -78,7 +78,7 @@ function addBasket(element) {
 
         basketItemEl.innerHTML =
             `
-            <span class="item-name"><b>${element.name}</b></span>
+            <span class="item-name"><b>${element.name.replace('_', ' ').replace('-', '.')}</b></span>
             <div>
                 <span class="amount">Ilość: ${itemsInBasket[element.name]}</span>
                 <button class="btn btn-outline-danger remove hidden"><i class="fa fa-trash" aria-hidden="true"></i></button>

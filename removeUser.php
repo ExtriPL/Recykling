@@ -20,7 +20,7 @@ if (isset($_GET["username"])) {
 }
 if (isset($_GET["classCode"])) {
     SchoolClass::removeClass($_GET["classCode"]);
-    $_SESSION["back-message"] = "Pomyślnie klasę " . $_GET["classCode"] . ".";
+    $_SESSION["back-message"] = "Pomyślnie usunięto klasę " . $_GET["classCode"] . ".";
 }
 if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
     header("location:teacherPanel.php");
@@ -31,3 +31,4 @@ else
     header("location:adminPanel.php");
     exit();
 }
+?>

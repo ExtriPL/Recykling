@@ -1,8 +1,8 @@
 {
-	"butelka":10,
-	"puszka":15,
-	"aaa":10,
-	"aaaaa":15,
-	"baaautelka":10,
-	"dasd":15
+	"Butelka_2L":0.1016,
+	"Butelka_1-75L":0.0929,
+	"Butelka_1-5L":0.0839,
+	"Butelka_1L":0.0640,
+	"Butelka_0-7L":0.0504,
+	"Butelka_0-5L":0.0403
 }
