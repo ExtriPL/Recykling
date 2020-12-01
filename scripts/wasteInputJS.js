@@ -62,7 +62,7 @@ document.querySelector(".submit-button").addEventListener("click", () => {
             `;
         }
     };
-    xhttp.open("POST", "../responseTest.php?d=" + JSON.stringify(itemsInBasket), true);
+    xhttp.open("POST", "../recykling/responseTest.php?d=" + JSON.stringify(itemsInBasket), true);
     xhttp.send();
 
     itemsInBasket = {};

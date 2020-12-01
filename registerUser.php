@@ -22,7 +22,6 @@ if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
 
 <head>
     <meta charset='utf-8'>
-    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <?php require("attachments/links.php") ?>

@@ -16,7 +16,6 @@ include("Systems/schoolClass.php");
 
 <head>
     <meta charset='utf-8'>
-    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
     <script src="scripts/datapoints.js"></script>
@@ -107,7 +106,7 @@ include("Systems/schoolClass.php");
                                 return $array;
                             }
 
-                            $startDate = new DateTime("2020-9-1");
+                            $startDate = new DateTime("2020-12-7");
                             $endDate = new DateTime();
                             $diff = date_diff($startDate, $endDate)->format('%a');
 

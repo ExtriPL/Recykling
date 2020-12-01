@@ -48,7 +48,7 @@ if (isset($_SESSION["isMaster"]) && $_SESSION["isMaster"]) {
 
     for ($i = 0; $i < 30; $i++) {
         //  echo floor($i*($diff/30));
-        $startDate = new DateTime("2020-9-1");
+        $startDate = new DateTime("2020-12-7");
         $t = floor($i * ($diff / 30));
         $date = date_add($startDate, new DateInterval("P" . $t . "D"));
         $date = $date->format("Y-m-d");
